@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <link rel="stylesheet" href="profileStyle.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 id="user">Welcome, <%= username %>!</h1>
+            <a href="/logout" class="logout-button">Logout</a>
+        </div>
+
+        <h2 class="menu">
+            <a href="#" class="active" onclick="showSection('myPosts')">My Posts</a>
+            <a href="#" class="" onclick="showSection('allPosts')">All Posts</a>
+            <a href="#" class="" onclick="showSection('chatRoom')">Chat Room</a>
+        </h2>
+
+        <div id="myPosts" class="sections show">
+            <ul>
+                <% userPosts.forEach(post => { %>
+                    <li>
+                        <strong><%= post.content %></strong>
+                        <small>(<%= post.createdAt.toLocaleString() %>)</small>
+                    </li>
+                <% }) %>
+            </ul>
+        </div>
+
+        <div id="allPosts" class="sections hidden">
+            <ul>
+                <% allPosts.forEach(post => { %>
+                    <li>
+                        <h4><%= post.username %> posted:</h4>
+                        <strong><%= post.content %></strong>
+                        <small>(<%= post.createdAt.toLocaleString() %>)</small>
+                    </li>
+                <% }) %>
+            </ul>
+        </div>
+
+        <form id="postForm" class="show" action="/addpost" method="POST">
+            <textarea name="post" placeholder="Type a new post..." rows="3" required></textarea>
+            <button type="submit">Add Post</button>
+        </form>
+
+        <div id="chatRoom" class="chat-container sections hidden">
+            <!-- <h2>Live Chat</h2> -->
+            <div id="messages" class="messages"></div>
+            <form id="chatForm">
+                <input id="messageInput" type="text" placeholder="Type a message..." autocomplete="off" required />
+                <button type="submit">Send</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="home.js"></script>
+    <script src="wsc.js"></script>
+</body>
+</html>
